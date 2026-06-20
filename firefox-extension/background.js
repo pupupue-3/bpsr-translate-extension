@@ -31,6 +31,6 @@ function triggerActiveTab() {
 }
 chrome.commands.onCommand.addListener(cmd => { if (cmd === 'translate-now') triggerActiveTab(); });
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({ id: 'starezo-translate-now', title: 'このページの用語を翻訳', contexts: ['page'] }, () => void chrome.runtime.lastError);
+  chrome.contextMenus.create({ id: 'starezo-translate-now', title: 'このページを翻訳', contexts: ['page'] }, () => void chrome.runtime.lastError);
 });
 chrome.contextMenus.onClicked.addListener(info => { if (info.menuItemId === 'starezo-translate-now') triggerActiveTab(); });

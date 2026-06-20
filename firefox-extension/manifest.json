@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "スタレゾ 日英中→日本語 翻訳",
-  "version": "2.5.0",
-  "description": "ゲーム用語(公式名)と説明文を日本語化。手動ボタンで発動→そのままChrome翻訳と併用できます。",
+  "version": "3.0.1",
+  "description": "英語のWebページを日本語化（英語→日本語）。maxrollのスタレゾ用語・説明を辞書で正確に置換、DeepLキーで全文翻訳も可。",
   "permissions": [
     "storage",
     "tabs",

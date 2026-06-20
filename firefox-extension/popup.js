@@ -1,4 +1,4 @@
-const D = { direction: 'both', deeplKey: '', mtEnabled: true, minLen: 2, enabled: true, mode: 'manual', autoSites: 'maxroll.gg' };
+const D = { deeplKey: '', mtEnabled: true, minLen: 2, enabled: true, mode: 'manual', autoSites: 'maxroll.gg' };
 const $ = id => document.getElementById(id);
 const HINTS = {
   manual: '普段は何もしません（下の対象サイトは自動）。ボタンかAlt+Tで翻訳→Chrome翻訳を併用すると全文＋公式用語に。',
@@ -10,7 +10,7 @@ function refresh() {
   document.querySelector('.mt-only').style.display = 'block'; // どちらのモードでも任意で使える
 }
 chrome.storage.sync.get(D, c => {
-  $('mode').value = c.mode || 'manual'; $('dir').value = c.direction;
+  $('mode').value = c.mode || 'manual';
   $('key').value = c.deeplKey; $('mt').checked = c.mtEnabled; $('enabled').checked = c.enabled; $('sites').value = c.autoSites || ''; refresh();
 });
 $('mode').addEventListener('change', refresh);
@@ -34,7 +34,7 @@ $('addsite').addEventListener('click', async () => {
 
 $('save').addEventListener('click', () => {
   chrome.storage.sync.set({
-    mode: $('mode').value, direction: $('dir').value,
+    mode: $('mode').value,
     deeplKey: $('key').value.trim(), mtEnabled: $('mt').checked, enabled: $('enabled').checked, autoSites: $('sites').value.trim(),
   }, async () => {
     $('status').textContent = '保存しました。再読み込みします…';

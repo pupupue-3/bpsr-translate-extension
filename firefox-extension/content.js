@@ -18,7 +18,7 @@
   { try { descIndex = JSON.parse(await getText(DESC_URL)); }
     catch (e) { console.warn('[starezo] 説明文インデックス取得失敗:', e.message); } }
 
-  const maps = E.pickMaps(table, cfg.direction);
+  const maps = E.pickMaps(table, 'en2ja'); // 英語のみ
   if (!maps.length) { console.warn('[starezo] 対応表が空'); return; }
   const termEngines = maps.map(m => E.buildTermEngine(m, cfg.minLen));
   const useMT = !!(cfg.mtEnabled && cfg.deeplKey);
@@ -47,7 +47,7 @@
     let e = pending.get(t);
     if (!e) {
       const { text: prot, ph } = E.protectTerms(t, termEngines);
-      const srcLang = /[一-鿿]/.test(t) && !/[A-Za-z]{4,}/.test(t) ? 'ZH' : 'EN';
+      const srcLang = 'EN';
       e = { nodes: new Set(), ph, prot, srcLang }; pending.set(t, e);
     }
     e.nodes.add(node);
@@ -91,8 +91,8 @@
     // 1) 説明文の公式訳
     if (t.length >= DESC_MINLEN && descIndex) { const k = E.normDesc(t);
       if (k.length >= DESC_MINLEN && descIndex[k] !== undefined) { node.nodeValue = orig.replace(t, descIndex[k]); seen.add(node); return; } }
-    // 2) MTあり：中国語 or 2文字以上の英単語を含む短文も対象（用語は保護して送る）
-    if (useMT && (/[一-鿿]/.test(t) || /[A-Za-z]{2,}/.test(t))) { seen.add(node); enqueue(node, t); return; }
+    // 2) MTあり：2文字以上の英単語を含む短文も対象（用語は保護して送る）
+    if (useMT && /[A-Za-z]{2,}/.test(t)) { seen.add(node); enqueue(node, t); return; }
     // 3) MTなし：用語のみ置換
     const rep = E.applyTerms(orig, termEngines); if (rep !== orig) node.nodeValue = rep;
     seen.add(node);
