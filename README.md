@@ -18,12 +18,13 @@
 
 ## Chrome へのインストール
 
-1. `chrome://extensions` を開く
-2. 右上の「**デベロッパーモード**」を ON
-3. 「**パッケージ化されていない拡張機能を読み込む**」→ `chrome-extension` フォルダを選択
-4. ツールバーに「スタレゾ翻訳」アイコンが出れば完了
+1. [Releases](https://github.com/pupupue-3/bpsr-translate-extension/releases) から `bpsr-translate-chrome.zip` をダウンロードして解凍
+2. `chrome://extensions` を開く
+3. 右上の「**デベロッパーモード**」を ON
+4. 「**パッケージ化されていない拡張機能を読み込む**」→ 解凍してできた **bpsr-translate-chrome** フォルダを選択
+5. ツールバーに「スタレゾ翻訳」アイコンが出れば完了
 
-更新したとき（コード変更後）は、`chrome://extensions` でこの拡張の **リロード（↻）** を押してください。
+> 解凍したフォルダは消さないでください（消すと拡張が無効になります）。更新時は新しい zip を解凍し、`chrome://extensions` でリロード（↻）するか同じ手順で読み込み直してください。
 
 ---
 
@@ -37,9 +38,11 @@
 2. `xpinstall.signatures.required` を検索し、値を **`false`** に設定
 
 ### 2. 拡張を読み込む
-1. `about:addons` を開く
-2. 右上の歯車 ⚙ → 「**ファイルからアドオンをインストール**」
-3. `bpsr-translate-firefox.xpi` を選択
+
+1. [Releases](https://github.com/pupupue-3/bpsr-translate-extension/releases) から `bpsr-translate-firefox.xpi` をダウンロード
+2. `about:addons` を開く
+3. 右上の歯車 ⚙ → 「**ファイルからアドオンをインストール**」
+4. ダウンロードした `bpsr-translate-firefox.xpi` を選択
 
 ---
 ## 初期設定（共通）
@@ -80,5 +83,3 @@
 1. [DeepL API Free](https://www.deepl.com/pro-api) に登録（**月50万文字まで無料**）
 2. アカウント画面で発行される **Authentication Key** をコピー（無料キーは末尾が `:fx`）
 3. 拡張ポップアップの「DeepL APIキー」に貼り付け →「保存して再読み込み」
-
-- データ出典：maxroll.gg（EN/ZH ）
