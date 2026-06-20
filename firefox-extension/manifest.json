@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "スタレゾ 日英中→日本語 翻訳",
+  "version": "2.5.0",
+  "description": "ゲーム用語(公式名)と説明文を日本語化。手動ボタンで発動→そのままChrome翻訳と併用できます。",
+  "permissions": [
+    "storage",
+    "tabs",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://api-free.deepl.com/*",
+    "https://api.deepl.com/*",
+    "https://bpstar-tools.github.io/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "スタレゾ翻訳",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "commands": {
+    "translate-now": {
+      "suggested_key": {
+        "default": "Alt+T"
+      },
+      "description": "このページの用語を翻訳"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "engine.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "bpsr-translate@bpstar-tools",
+      "strict_min_version": "121.0"
+    }
+  }
+}
