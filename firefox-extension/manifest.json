@@ -1,12 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "スタレゾ 日英中→日本語 翻訳",
-  "version": "3.0.1",
-  "description": "英語のWebページを日本語化（英語→日本語）。maxrollのスタレゾ用語・説明を辞書で正確に置換、DeepLキーで全文翻訳も可。",
+  "name": "スタレゾMaxroll翻訳",
+  "version": "1.0.0",
+  "description": "maxrollのスタレゾ用語・説明を辞書で正確に置換、DeepLキーで全文翻訳も可。",
   "permissions": [
     "storage",
-    "tabs",
-    "contextMenus"
+    "tabs"
   ],
   "host_permissions": [
     "<all_urls>",
@@ -21,7 +20,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "スタレゾ翻訳",
+    "default_title": "スタレゾMaxroll翻訳",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",

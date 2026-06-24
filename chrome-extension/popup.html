@@ -1,40 +1,49 @@
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><style>
 body{font-family:system-ui,sans-serif;width:330px;margin:0;padding:14px;font-size:13px}
 h1{font-size:14px;margin:0 0 10px}label{display:block;margin:10px 0 4px;font-weight:600}
-input[type=url],input[type=text],select{width:100%;box-sizing:border-box;padding:6px}
+input[type=text],select,textarea{width:100%;box-sizing:border-box;padding:6px}
 .row{display:flex;align-items:center;gap:8px;margin-top:12px}
 button{margin-top:10px;width:100%;padding:8px;cursor:pointer}
 #now{background:#1a73e8;color:#fff;border:none;border-radius:6px;font-weight:600}
 .hint{color:#666;font-size:11px;margin-top:4px}#status{margin-top:10px;color:#0a0;min-height:16px}
-.mt-only{display:none}hr{border:none;border-top:1px solid #eee;margin:14px 0}
+hr{border:none;border-top:1px solid #eee;margin:14px 0}
+#deeplrow{display:none}
 </style></head><body>
-<h1>スタレゾ翻訳</h1>
+<h1>スタレゾMaxroll翻訳</h1>
 
 <button id="now">▶ このページを今すぐ翻訳</button>
-<div class="hint">ショートカット: Alt+T ／ 右クリックメニューからも可。翻訳後にChromeの「日本語に翻訳」を併用できます。</div>
+<div class="hint">ショートカット Alt+T でも発動できます</div>
+
+<div class="row"><input id="enabled" type="checkbox"><label for="enabled" style="margin:0;font-weight:400">拡張を有効にする</label></div>
+
+<hr>
+
+<label for="engine">翻訳エンジン</label>
+<select id="engine">
+<option value="none">辞書のみ（用語だけ日本語化・無料）</option>
+<option value="chrome">Chrome内蔵翻訳で全文翻訳（無料・Chrome 138+）</option>
+<option value="deepl">DeepLで全文翻訳（要APIキー）</option>
+</select>
+<div class="hint" id="enginehint"></div>
+
+<div id="deeplrow">
+<label for="key">DeepL APIキー</label>
+<input id="key" type="text" placeholder="末尾 :fx は無料キー">
+<div class="hint">無料登録で取得（月50万文字無料）。</div>
+</div>
 
 <hr>
 
 <label for="mode">動作モード</label>
 <select id="mode">
-<option value="manual">手動（ボタン/Alt+Tで発動・おすすめ）</option>
+<option value="manual">手動（ボタン/Alt+Tで発動・対象サイトは自動）</option>
 <option value="always">常に翻訳（ページを開くと自動）</option>
 </select>
-<div class="hint" id="modehint"></div>
 
-<label for="sites">自動発動するサイト（手動モード時）</label>
-<textarea id="sites" rows="2" style="width:100%;box-sizing:border-box;padding:6px" placeholder="maxroll.gg"></textarea>
+<label for="sites">自動発動するサイト</label>
+<textarea id="sites" rows="2" placeholder="maxroll.gg"></textarea>
 <button id="addsite" type="button" style="margin-top:6px;padding:5px;font-size:12px">＋ 今のサイトを追加</button>
-<div class="hint">ここに書いたサイトは開くと自動翻訳。1行/カンマ区切り・* も使えます（例: *.maxroll.gg/*）。空なら自動なし＝Alt+Tで発動。</div>
-
-<div class="mt-only">
-<label for="key">DeepL APIキー（任意・未収録の文も翻訳）</label>
-<input id="key" type="text" placeholder="未設定なら機械翻訳OFF">
-<div class="hint">無料キーは末尾が :fx</div>
-<div class="row"><input id="mt" type="checkbox" checked><label for="mt" style="margin:0;font-weight:400">機械翻訳を使う</label></div>
-</div>
-
-<div class="row"><input id="enabled" type="checkbox" checked><label for="enabled" style="margin:0;font-weight:400">拡張を有効にする</label></div>
+<div class="hint">1行/カンマ区切り・* 可。空なら自動なし＝Alt+Tで発動。</div>
 
 <button id="save">保存して再読み込み</button>
 <div id="status"></div>

@@ -1,5 +1,6 @@
-// DeepL（CORS回避のためSWで実行）。複数textをまとめて送れる deeplBatch をサポート。
+// DeepL（CORS回避のためSWで実行）。複数text一括＋HTMLタグ保持に対応。
 function deeplEndpoint(key) { return /:fx$/.test(key) ? 'https://api-free.deepl.com/v2/translate' : 'https://api.deepl.com/v2/translate'; }
+const authHeaders = key => ({ 'Authorization': 'DeepL-Auth-Key ' + key, 'Content-Type': 'application/x-www-form-urlencoded' });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg && (msg.type === 'deepl' || msg.type === 'deeplBatch')) {
@@ -8,11 +9,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     for (const t of texts) params.append('text', t);
     params.append('target_lang', 'JA');
     if (msg.srcLang) params.append('source_lang', msg.srcLang);
-    fetch(deeplEndpoint(msg.key), {
-      method: 'POST',
-      headers: { 'Authorization': 'DeepL-Auth-Key ' + msg.key, 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString(),
-    }).then(r => r.json().then(j => ({ status: r.status, j })))
+    if (msg.tagHandling) {                           // タグ保持（xml/html）
+      params.append('tag_handling', msg.tagHandling);
+      if (msg.ignoreTags) params.append('ignore_tags', msg.ignoreTags);
+    }
+    fetch(deeplEndpoint(msg.key), { method: 'POST', headers: authHeaders(msg.key), body: params.toString() })
+      .then(r => r.json().then(j => ({ status: r.status, j })))
       .then(({ status, j }) => {
         if (!j || !j.translations) return sendResponse({ ok: false, error: 'HTTP ' + status });
         const out = j.translations.map(x => x.text);
@@ -30,7 +32,3 @@ function triggerActiveTab() {
   });
 }
 chrome.commands.onCommand.addListener(cmd => { if (cmd === 'translate-now') triggerActiveTab(); });
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({ id: 'starezo-translate-now', title: 'このページを翻訳', contexts: ['page'] }, () => void chrome.runtime.lastError);
-});
-chrome.contextMenus.onClicked.addListener(info => { if (info.menuItemId === 'starezo-translate-now') triggerActiveTab(); });
